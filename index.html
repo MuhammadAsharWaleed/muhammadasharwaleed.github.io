@@ -409,9 +409,10 @@
           <li>Resume — <a href="resume.pdf" target="_blank" rel="noopener">Download my Resume</a></li><!-- EDIT ME: add your resume link -->
         </ul>
       </div>
-      <form class="contact-form" id="contactForm" action="https://formsubmit.co/asharpte998877@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="New message from your portfolio site" />
-        <input type="hidden" name="_captcha" value="false" />
+      <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="f514c563-7049-476c-8e5b-23005c46d2d4" />
+        <input type="hidden" name="subject" value="New message from your portfolio site" />
+        <input type="hidden" name="from_name" value="Portfolio Contact Form" />
         <label for="name">Name</label>
         <input id="name" name="name" type="text" placeholder="Your name" required />
         <label for="email">Email</label>
