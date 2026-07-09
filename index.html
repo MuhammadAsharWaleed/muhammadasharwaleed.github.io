@@ -409,13 +409,16 @@
           <li>Resume — <a href="resume.pdf" target="_blank" rel="noopener">Download my Resume</a></li><!-- EDIT ME: add your resume link -->
         </ul>
       </div>
-      <form class="contact-form" action="https://formsubmit.co/asharpte998877@gmail.com" method="POST">
+      <form class="contact-form" id="contactForm" action="https://formsubmit.co/asharpte998877@gmail.com" method="POST">
         <input type="hidden" name="_subject" value="New message from your portfolio site" />
         <input type="hidden" name="_captcha" value="false" />
         <label for="name">Name</label>
         <input id="name" name="name" type="text" placeholder="Your name" required />
         <label for="email">Email</label>
-        <input id="email" name="_replyto" type="email" placeholder="you@company.com" required />
+        <input id="email" name="email" type="email" placeholder="you@company.com" required />
+        <label for="emailConfirm">Confirm email</label>
+        <input id="emailConfirm" name="emailConfirm" type="email" placeholder="Re-enter your email" required />
+        <span id="emailMismatch" style="display:none; color:var(--coral); font-family:var(--mono); font-size:12.5px; margin-top:-8px;">Emails don't match — please check and try again.</span>
         <label for="details">Project details</label>
         <textarea id="details" name="details" placeholder="What are you trying to build?" required></textarea>
         <button type="submit" class="btn btn-primary">Send message</button>
@@ -619,6 +622,28 @@
     });
   }
 
+  function initContactForm(){
+    const form = document.getElementById("contactForm");
+    if (!form) return;
+    const email = document.getElementById("email");
+    const confirm = document.getElementById("emailConfirm");
+    const mismatch = document.getElementById("emailMismatch");
+
+    form.addEventListener("submit", function(e){
+      if (email.value.trim().toLowerCase() !== confirm.value.trim().toLowerCase()){
+        e.preventDefault();
+        mismatch.style.display = "block";
+        confirm.focus();
+      } else {
+        mismatch.style.display = "none";
+      }
+    });
+
+    [email, confirm].forEach(function(el){
+      el.addEventListener("input", function(){ mismatch.style.display = "none"; });
+    });
+  }
+
   function initFooterYear(){
     const el = document.getElementById("year");
     if (el) el.textContent = new Date().getFullYear();
@@ -693,7 +718,7 @@
   // Run everything defensively — a problem in one section should
   // never take down the rest of the page.
   document.addEventListener("DOMContentLoaded", function(){
-    [renderLanguages, renderSkills, renderProjects, initNav, initFooterYear, initTerminal].forEach(function(fn){
+    [renderLanguages, renderSkills, renderProjects, initNav, initContactForm, initFooterYear, initTerminal].forEach(function(fn){
       try { fn(); } catch (err) { console.error("Portfolio init error in " + fn.name + ":", err); }
     });
   });
